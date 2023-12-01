@@ -10,6 +10,7 @@ import columns from './columns';
 
 const ListTopicsUser = (props) => {
     const [data, setData] = useState()
+    const [isLoading, setIsLoading] = useState(true)
 
     const [pagination, setPagination] = useState({
         pagIndex: 1,
@@ -32,6 +33,8 @@ const ListTopicsUser = (props) => {
                     value: search
                 })
             setData(initialData)
+
+            setIsLoading(!isLoading)
 
             const { size, totals } = initialData.data
             setPagination((prev) => ({
@@ -113,8 +116,6 @@ const ListTopicsUser = (props) => {
             filter.value)
     }
 
-    console.log("data:" + (data?.data.topics))
-
     return (
         <div className={clsx('flex items-center justify-center flex-col gap-3', props.className)}>
             <h1 className='text-sm text-black dark:text-white font-bold font-merriweather text-center'>
@@ -128,6 +129,7 @@ const ListTopicsUser = (props) => {
             </div>
 
             <DataTableTopics
+                isLoading={isLoading}
                 columns={columns}
                 data={data?.data.topics}
                 onDelete={handleDeleteTopics}

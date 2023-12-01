@@ -48,7 +48,7 @@ module.exports = {
         },
       },
       animation: {
-        loading: "loader infinite 3.5s",
+        loading: "loader infinite 2s",
       },
       transitionDelay: {
         400: "400ms",

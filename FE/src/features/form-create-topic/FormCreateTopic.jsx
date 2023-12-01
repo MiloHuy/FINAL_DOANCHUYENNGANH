@@ -2,22 +2,18 @@ import { Button, Input } from "@nextui-org/react";
 import clsx from "clsx";
 import { useFormik } from "formik";
 import { useMemo, useState } from "react";
-import { useDispatch } from "react-redux";
 import Datepicker from "react-tailwindcss-datepicker";
 import { toast } from 'react-toastify';
 import { createTopicUser } from "services/user.svc";
 import { object, string } from "yup";
 
 const FormCreateTopics = (props) => {
-    const dispatch = useDispatch()
     const [value, setValue] = useState({
         startDate: null,
         endDate: null
     });
 
     const handleValueChange = (newValue) => {
-        console.log("newValue startDate:", newValue.startDate);
-        console.log("newValue endDate:", newValue.endDate);
         setValue(newValue);
     }
 
@@ -93,12 +89,9 @@ const FormCreateTopics = (props) => {
 
     const { values, errors } = formik
 
-    console.log("Value: " + Object.entries(values))
-    console.log("Value endDate type: " + (value.endDate))
-
     return (
         <form
-            className={clsx('flex flex-col gap-3 items-center justify-start p-4 w-full h-full border rounded-lg ', props.className)}
+            className={clsx('flex flex-col gap-3 items-center justify-start p-4 w-full h-full rounded-lg ', props.className)}
             onSubmit={formik.handleSubmit}
         >
             <h1 className="text-lg font-bold font-merriweather text-center dark:text-white ">
@@ -126,13 +119,15 @@ const FormCreateTopics = (props) => {
                     onChange={formik.handleChange}
                 />
 
-                <div className="h-2/3 border rounded-lg">
+                <div className="h-full flex items-center border rounded-lg">
                     <Datepicker
-                        inputClassName=" w-full rounded-md focus:ring-0 font-normal dark:bg-black dark:placeholder:text-white dark:text-white "
+                        primaryColor={"sky"}
+                        inputClassName="w-full rounded-md font-normal  dark:bg-black dark:placeholder:text-white dark:text-white "
                         value={value}
                         onChange={handleValueChange}
                         displayFormat={"DD/MM/YYYY"}
                         popoverDirection='down'
+                        classNames='border-none'
                     />
                 </div>
 

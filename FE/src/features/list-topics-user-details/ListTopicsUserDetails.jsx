@@ -9,6 +9,7 @@ import columns from './columns';
 const ListTopicsUserDetails = (props) => {
     const { userInfo } = props
     const { _id, name } = userInfo
+    const [isLoading, setIsLoading] = useState(true)
 
     const [data, setData] = useState()
 
@@ -32,6 +33,8 @@ const ListTopicsUserDetails = (props) => {
                 })
             setData(initialData)
 
+            setIsLoading(!isLoading)
+
             const { size, totals } = initialData.data
             setPagination((prev) => ({
                 ...prev,
@@ -42,7 +45,6 @@ const ListTopicsUserDetails = (props) => {
         catch (err) {
             console.log(err)
         }
-
     }, [])
 
     const handlePageChange = useCallback((newPage) => {
@@ -72,6 +74,7 @@ const ListTopicsUserDetails = (props) => {
             </h1>
 
             <DataTableTopics
+                isLoading={isLoading}
                 columns={columns}
                 data={data?.data.topics}
             />

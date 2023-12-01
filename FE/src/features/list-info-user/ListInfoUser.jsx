@@ -8,6 +8,7 @@ import columns from './columns';
 
 const ListInfoUser = (props) => {
     const [data, setData] = useState()
+    const [isLoading, setIsLoading] = useState(true)
 
     const [filter, setFilter] = useState({
         page: 1,
@@ -31,6 +32,8 @@ const ListInfoUser = (props) => {
                 }
             )
             setData(initialData)
+
+            setIsLoading(!isLoading)
 
             const { size, totals } = initialData.data
             setPagination((prev) => ({
@@ -91,6 +94,7 @@ const ListInfoUser = (props) => {
             </div>
 
             <DataTableUser
+                isLoading={isLoading}
                 columns={columns}
                 data={data?.data.users}
             />

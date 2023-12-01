@@ -1,11 +1,9 @@
-import { Button, Modal, ModalBody, ModalContent, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, useDisclosure } from "@nextui-org/react";
-import Loading from "components/loading";
+import { Button, Modal, ModalBody, ModalContent, Spinner, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, useDisclosure } from "@nextui-org/react";
 import ListTopicsUserDetails from "features/list-topics-user-details";
 import { Eye } from 'lucide-react';
 import { useCallback, useState } from "react";
 
 const DataTableUser = ({ columns, data, onEdit, isLoading }) => {
-    console.log("Is loading datatable user: " + isLoading)
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
     const [userInfo, setUserInfo] = useState({
@@ -88,7 +86,7 @@ const DataTableUser = ({ columns, data, onEdit, isLoading }) => {
                         <TableBody
                             isLoading={isLoading}
                             items={data}
-                            loadingContent={<Loading />}
+                            loadingContent={<Spinner label="Loading..." />}
                         >
                             {(item) => (
                                 <TableRow key={item.name}>

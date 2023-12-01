@@ -1,11 +1,11 @@
-import { Button, Modal, ModalBody, ModalContent, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, useDisclosure } from "@nextui-org/react";
+import { Button, Modal, ModalBody, ModalContent, Spinner, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, useDisclosure } from "@nextui-org/react";
 import FormEditTopic from "features/form-edit-topic";
 import FormViewTopic from "features/form-view-topic";
 import { Eye, PenSquare, Trash2 } from 'lucide-react';
 import { useCallback, useState } from "react";
 import { dateTimeFormat, hourTimeFormat } from "utils/format-date.utils";
 
-const DataTableTopics = ({ columns, data, onDelete, onEdit }) => {
+const DataTableTopics = ({ columns, data, onDelete, onEdit, isLoading }) => {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
     const [optionAction, setOptionAction] = useState()
@@ -113,7 +113,7 @@ const DataTableTopics = ({ columns, data, onDelete, onEdit }) => {
                 );
             case "action":
                 return (
-                    <div className="relative flex items-center">
+                    <div className="relative flex items-center gap-1">
                         <Button className=' dark:bg-white' isIconOnly variant="light" onClick={() => handleViewTopic(
                             user._id,
                             user.name,
@@ -123,7 +123,7 @@ const DataTableTopics = ({ columns, data, onDelete, onEdit }) => {
                             user.createdAt,
                             user.updatedAt,
                         )}>
-                            <Eye size={16} color="#0a0a0a" />
+                            <Eye size={20} color="#0a0a0a" />
                         </Button>
 
                         <Button className=' dark:bg-white' isIconOnly variant="light" onClick={() => handleEditTopics(
@@ -135,11 +135,11 @@ const DataTableTopics = ({ columns, data, onDelete, onEdit }) => {
                             user.createdAt,
                             user.updatedAt,
                         )}>
-                            <PenSquare size={16} color="#0a0a0a" />
+                            <PenSquare size={20} color="#0a0a0a" />
                         </Button>
 
                         <Button className=' dark:bg-white' isIconOnly variant="light" onClick={() => handleOnDelete(user._id)} >
-                            <Trash2 size={16} color="#be2d2d" />
+                            <Trash2 size={20} color="#be2d2d" />
                         </Button>
                     </div>
                 );
@@ -147,8 +147,6 @@ const DataTableTopics = ({ columns, data, onDelete, onEdit }) => {
                 return cellValue;
         }
     }, []);
-
-    // console.log('topicsInfo: ' + Object.entries(topicsInfo))
 
     return (
         <div className='w-full p-4'>
@@ -162,13 +160,18 @@ const DataTableTopics = ({ columns, data, onDelete, onEdit }) => {
                     </TableColumn>}
                 </TableHeader>
                 {
-                    data && data.length !== 0 ? <TableBody items={data}>
-                        {(item) => (
-                            <TableRow key={item.name}>
-                                {(columnKey) => <TableCell>{renderCell(item, columnKey, item._id)}</TableCell>}
-                            </TableRow >
-                        )}
-                    </TableBody > : <TableBody emptyContent={"No rows to display."}>{[]}</TableBody>
+                    data && data.length !== 0 ?
+                        <TableBody
+                            isLoading={isLoading}
+                            items={data}
+                            loadingContent={<Spinner label="Loading..." />}
+                        >
+                            {(item) => (
+                                <TableRow key={item.name}>
+                                    {(columnKey) => <TableCell>{renderCell(item, columnKey, item._id)}</TableCell>}
+                                </TableRow >
+                            )}
+                        </TableBody > : <TableBody emptyContent={"No rows to display."}>{[]}</TableBody>
                 }
 
             </Table >

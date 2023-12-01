@@ -9,6 +9,7 @@ import columns from './columns';
 
 const ListAccountUser = (props) => {
     const [data, setData] = useState()
+    const [isLoading, setIsLoading] = useState(true)
 
     const [pagination, setPagination] = useState({
         pagIndex: 1,
@@ -30,6 +31,8 @@ const ListAccountUser = (props) => {
                 search: search
             })
             setData(initialData)
+
+            setIsLoading(!isLoading)
 
             const { size, totals } = initialData.data
             setPagination((prev) => (({
@@ -126,6 +129,7 @@ const ListAccountUser = (props) => {
             </div>
 
             <DataTable
+                isLoading={isLoading}
                 columns={columns}
                 data={data?.data.users}
                 onDelete={handleDeleteAccount}

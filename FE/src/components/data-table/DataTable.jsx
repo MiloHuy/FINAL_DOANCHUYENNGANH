@@ -1,13 +1,10 @@
-import { Button, Modal, ModalBody, ModalContent, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, useDisclosure } from "@nextui-org/react";
+import { Button, Modal, ModalBody, ModalContent, Spinner, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, useDisclosure } from "@nextui-org/react";
 import FormSetPassword from "features/form-set-password";
 import { PenSquare, Trash2 } from 'lucide-react';
 import { useCallback, useState } from "react";
-import { useDispatch } from "react-redux";
 import { dateTimeFormat, hourTimeFormat } from "utils/format-date.utils";
 
 const DataTable = ({ columns, data, isLoading, onDelete }) => {
-    const dispatch = useDispatch()
-
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [usernameInfo, setUserInfo] = useState({
         username: '',
@@ -98,13 +95,18 @@ const DataTable = ({ columns, data, isLoading, onDelete }) => {
                     </TableColumn>}
                 </TableHeader>
                 {
-                    data && data.length !== 0 ? <TableBody items={data} loadingState={isLoading}>
-                        {(item) => (
-                            <TableRow key={item.username}>
-                                {(columnKey) => <TableCell>{renderCell(item, columnKey, item._id)}</TableCell>}
-                            </TableRow >
-                        )}
-                    </TableBody > : <TableBody emptyContent={"No rows to display."}>{[]}</TableBody>
+                    data && data.length !== 0 ?
+                        <TableBody
+                            items={data}
+                            isLoading={isLoading}
+                            loadingContent={<Spinner label="Loading..." />}
+                        >
+                            {(item) => (
+                                <TableRow key={item.username}>
+                                    {(columnKey) => <TableCell>{renderCell(item, columnKey, item._id)}</TableCell>}
+                                </TableRow >
+                            )}
+                        </TableBody > : <TableBody emptyContent={"No rows to display."}>{[]}</TableBody>
                 }
 
             </Table >

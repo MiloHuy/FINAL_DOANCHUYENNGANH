@@ -28,6 +28,7 @@ const DataTablePagination = (props) => {
                 isIconOnly
                 onClick={handleCurrentPageChangePrevious}
                 disabled={currentPage === 1}
+                className='-translate-y-1'
             >
                 <ChevronLeft size={20} />
             </Button>
@@ -50,6 +51,7 @@ const DataTablePagination = (props) => {
                 isIconOnly
                 onClick={handleCurrentPageChangeNext}
                 disabled={currentPage >= totalPages}
+                className='-translate-y-1'
             >
                 <ChevronRight size={20} />
             </Button>
