@@ -1,4 +1,5 @@
 
+import { Spinner } from "@nextui-org/react";
 import clsx from 'clsx';
 import DataTablePagination from 'components/data-table-pagination';
 import DataTableTopics from 'components/data-table-topics/DataTableTopics';
@@ -128,13 +129,22 @@ const ListTopicsUser = (props) => {
                     onSubmit={handleSearch} />
             </div>
 
-            <DataTableTopics
-                isLoading={isLoading}
-                columns={columns}
-                data={data?.data.topics}
-                onDelete={handleDeleteTopics}
-                onEdit={handleEditTopics}
-            />
+            {
+                data ?
+                    <DataTableTopics
+                        isLoading={isLoading}
+                        columns={columns}
+                        data={data.data.topics}
+                        onDelete={handleDeleteTopics}
+                        onEdit={handleEditTopics}
+                    />
+                    : <Spinner
+                        size="lg"
+                        label="Loading"
+                        color="default"
+                    />
+            }
+
 
 
             <DataTablePagination

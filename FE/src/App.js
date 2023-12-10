@@ -1,6 +1,6 @@
+import { Spinner } from "@nextui-org/react";
 import { NextUIProvider } from "@nextui-org/system";
 import FieldUpload from "components/field-upload";
-import Loading from "components/loading";
 import Authen from "pages/authen";
 import CreateAccount from "pages/create-account";
 import CreateTopic from "pages/create-topic";
@@ -30,7 +30,9 @@ function App() {
           <Route
             path="admin"
             element={
-              <Suspense fallback={<Loading />}>
+              <Suspense
+                fallback={<Spinner size="lg" label="Loading" color="default" />}
+              >
                 <LazyLoadingAdmin />
               </Suspense>
             }
@@ -44,7 +46,9 @@ function App() {
           <Route
             path="users"
             element={
-              <Suspense fallback={<Loading />}>
+              <Suspense
+                fallback={<Spinner size="lg" label="Loading" color="default" />}
+              >
                 <LazyLoadingUser />
               </Suspense>
             }

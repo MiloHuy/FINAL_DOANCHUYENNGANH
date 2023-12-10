@@ -11,8 +11,8 @@ const User = () => {
     }
 
     return (
-        <div className={`grid grid-cols-11 gap-2 h-screen bg-background ${darkmode}`}>
-            <div className='col-span-2'>
+        <div className={`grid grid-cols-11 gap-2 h-screen bg-background ${darkmode} overflow-auto`}>
+            <div className='col-span-2 overflow-auto'>
                 <Sidebar icons={sidebarIconsUser} handleController={handleDarkMode} className='h-full' />
             </div>
 

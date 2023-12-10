@@ -33,8 +33,6 @@ const DataTable = ({ columns, data, isLoading, onDelete }) => {
     const renderCell = useCallback((user, columnKey) => {
         const cellValue = user[columnKey];
 
-        console.log('dateTimeFormat: ' + dateTimeFormat(new Date(user.createdAt)))
-
         switch (columnKey) {
             case "name":
                 return (
@@ -84,8 +82,11 @@ const DataTable = ({ columns, data, isLoading, onDelete }) => {
     }, []);
 
     return (
-        <div className='max-w-[720px] min-w-[680px] min-h-[300px] p-4 overflow-x-hidden'>
-            <Table isStriped aria-label="Example static collection table">
+        <div
+            className='max-w-[800px] min-w-[700px] min-h-[300px] p-4 overflow-x-hidden'>
+            <Table
+                isStriped
+                layout="fixed">
                 <TableHeader columns={columns} >
                     {(column) => <TableColumn
                         key={column.key}
@@ -106,7 +107,9 @@ const DataTable = ({ columns, data, isLoading, onDelete }) => {
                                     {(columnKey) => <TableCell>{renderCell(item, columnKey, item._id)}</TableCell>}
                                 </TableRow >
                             )}
-                        </TableBody > : <TableBody emptyContent={"No rows to display."}>{[]}</TableBody>
+                        </TableBody >
+                        :
+                        <TableBody emptyContent={"No rows to display."}>{[]}</TableBody>
                 }
 
             </Table >

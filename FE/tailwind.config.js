@@ -26,7 +26,11 @@ module.exports = {
         open_sans: ["Open Sans", "sans-serif"],
       },
       colors: {
-        table_background: "#262626",
+        bg_main: "#F3F3F3",
+        table_background: "#A3A3A3",
+        table_body_background: "#C7C7C7",
+        table_header_background: "#262626",
+        bg_login: "#C3C4C6",
       },
       rotate: {
         28: "28deg",
@@ -66,7 +70,10 @@ module.exports = {
       themes: {
         light: {
           layout: {},
-          colors: {},
+          colors: {
+            focus: "#000000",
+            primary: "#000000",
+          },
         },
         dark: {
           layout: {},

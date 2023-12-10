@@ -1,7 +1,7 @@
 import { Button, Modal, ModalBody, ModalContent, Spinner, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, useDisclosure } from "@nextui-org/react";
 import ListTopicsUserDetails from "features/list-topics-user-details";
 import { Eye } from 'lucide-react';
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 const DataTableUser = ({ columns, data, onEdit, isLoading }) => {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -23,6 +23,17 @@ const DataTableUser = ({ columns, data, onEdit, isLoading }) => {
             name: name
         })
     }
+
+    const classNames = useMemo(
+        () => ({
+            th: ['bg-table_header_background text-white border-divider '],
+            base: ['max-w-full'],
+            table: ['bg-table_body_background rounded-lg'],
+            tb: ['border-b'],
+            wrapper: ['bg-table_background']
+        }),
+        [],
+    );
 
     const renderCell = useCallback((user, columnKey) => {
         const cellValue = user[columnKey];
@@ -55,10 +66,12 @@ const DataTableUser = ({ columns, data, onEdit, isLoading }) => {
             case "action":
                 return (
                     <div className="relative flex items-center">
-                        <Button className=' dark:bg-white' isIconOnly variant="light" onClick={() => handleViewTopic(
-                            user._id,
-                            user.name
-                        )}>
+                        <Button
+                            className=' dark:bg-white' isIconOnly variant="light"
+                            onClick={() => handleViewTopic(
+                                user._id,
+                                user.name
+                            )}>
                             <Eye size={20} color="#0a0a0a" />
                         </Button>
                     </div>
@@ -69,9 +82,11 @@ const DataTableUser = ({ columns, data, onEdit, isLoading }) => {
     }, []);
 
     return (
-        <div className='w-full p-4'>
+        <div className='w-full py-4'>
             <Table
                 selectionMode="single"
+                classNames={classNames}
+                layout="fixed"
             >
                 <TableHeader columns={columns} >
                     {(column) => <TableColumn
@@ -93,7 +108,9 @@ const DataTableUser = ({ columns, data, onEdit, isLoading }) => {
                                     {(columnKey) => <TableCell>{renderCell(item, columnKey, item._id)}</TableCell>}
                                 </TableRow >
                             )}
-                        </TableBody > : <TableBody emptyContent={"No rows to display."}>{[]}</TableBody>
+                        </TableBody >
+                        :
+                        <TableBody emptyContent={"No rows to display."}>{[]}</TableBody>
                 }
             </Table >
 

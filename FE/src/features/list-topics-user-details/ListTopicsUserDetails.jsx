@@ -1,4 +1,5 @@
 
+import { Spinner } from "@nextui-org/react";
 import clsx from 'clsx';
 import DataTablePagination from 'components/data-table-pagination';
 import DataTableTopics from 'components/data-table-topics/DataTableTopics';
@@ -73,11 +74,20 @@ const ListTopicsUserDetails = (props) => {
                 {`DANH SÁCH ĐỀ TÀI CỦA GIẢNG VIÊN ${name}`}
             </h1>
 
-            <DataTableTopics
-                isLoading={isLoading}
-                columns={columns}
-                data={data?.data.topics}
-            />
+            {
+                data ?
+                    <DataTableTopics
+                        isLoading={isLoading}
+                        columns={columns}
+                        data={data.data.topics}
+                    />
+                    : <Spinner
+                        size="lg"
+                        label="Loading"
+                        color="default"
+                    />
+            }
+
 
             <DataTablePagination
                 pagination={pagination}

@@ -53,7 +53,7 @@ const FormLogin = (props) => {
         } catch (err) {
             console.log("errorMessage: " + Object.entries(err.response))
 
-            toast.error(`1`, {
+            toast.error(`Đăng nhập thất bại`, {
                 position: "bottom-right",
                 autoClose: 2000,
                 hideProgressBar: false,
@@ -102,12 +102,12 @@ const FormLogin = (props) => {
             onSubmit={formik.handleSubmit}
         >
 
-            <h1 className='text-lg text-blue-950 font-bold font-merriweather text-center'>LOGIN</h1>
+            <h1 className='text-lg text-black font-bold font-merriweather text-center'>LOGIN</h1>
 
             <Input
                 name='username'
                 type='text'
-                className='py-[10px] px-[15px] text-sm my-[8px] mx-0 rounded-sm w-full'
+                className='py-[10px] px-[15px] text-sm my-[8px] mx-0 rounded-sm w-4/5'
                 placeholder='Please enter your username'
                 onChange={formik.handleChange}
             />
@@ -115,7 +115,7 @@ const FormLogin = (props) => {
             <Input
                 name='password'
                 type='password'
-                className='py-[10px] px-[15px] text-sm my-[8px] mx-0 rounded-sm w-full'
+                className='py-[10px] px-[15px] text-sm my-[8px] mx-0 rounded-sm w-4/5'
                 placeholder="Password"
                 onChange={formik.handleChange}
             />

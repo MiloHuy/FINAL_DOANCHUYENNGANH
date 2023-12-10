@@ -1,3 +1,4 @@
+import { Select, SelectItem, Spinner } from "@nextui-org/react";
 import clsx from 'clsx';
 import DataTablePagination from 'components/data-table-pagination';
 import DataTableUser from 'components/data-table-user';
@@ -8,12 +9,15 @@ import columns from './columns';
 
 const ListInfoUser = (props) => {
     const [data, setData] = useState()
-    const [isLoading, setIsLoading] = useState(true)
+    const [valueSort, setValueSort] = useState('');
+    const [typeSort, setTypeSort] = useState('asc');
+    const [isLoading, setIsLoading] = useState(false)
 
     const [filter, setFilter] = useState({
         page: 1,
         size: 4,
         search: '',
+        sort: '',
     })
 
     const [pagination, setPagination] = useState({
@@ -22,18 +26,20 @@ const ListInfoUser = (props) => {
         totals: 2
     })
 
-    const fetchTopics = useCallback(async (page, pageSize, search) => {
+    const fetchTopics = useCallback(async (page, pageSize, search, sort) => {
         try {
+            setIsLoading(true)
             const initialData = await getListUser(
                 {
                     page: page,
                     size: pageSize,
-                    search: search
+                    search: search,
+                    sort: sort
                 }
             )
             setData(initialData)
 
-            setIsLoading(!isLoading)
+            setIsLoading(false)
 
             const { size, totals } = initialData.data
             setPagination((prev) => ({
@@ -48,13 +54,37 @@ const ListInfoUser = (props) => {
 
     }, [])
 
+    const handleSelectionChange = (e) => {
+        setValueSort(e.target.value);
+    };
+
+    const handleSelectionTypeSort = (e) => {
+        setTypeSort(e.target.value);
+    };
+
+    const handleSort = useCallback(() => {
+        setFilter((prev) => ({
+            ...prev,
+            page: 1,
+            sort: [valueSort, typeSort].join(',')
+        }))
+
+        setPagination((prev) => ({
+            ...prev,
+            pagIndex: 1
+        }))
+    }, [valueSort, typeSort])
+
     useEffect(() => {
         fetchTopics(
             filter.page,
             filter.size,
-            filter.search
+            filter.search,
+            filter.sort,
         )
-    }, [fetchTopics, filter.page, filter.size, filter.search])
+
+        handleSort()
+    }, [fetchTopics, filter.page, filter.size, filter.search, filter.sort, handleSort])
 
     const handlePageChange = useCallback((newPage) => {
         setFilter((prev) => ({
@@ -82,26 +112,70 @@ const ListInfoUser = (props) => {
     }, [])
 
     return (
-        <div className={clsx('flex items-center justify-center flex-col gap-3', props.className)}>
+        <div className={clsx('grid items-center justify-center grid-cols-1 gap-3', props.className)}>
             <h1 className='text-sm text-black dark:text-white font-bold font-merriweather text-center'>
                 DANH SÁCH GIẢNG VIÊN
             </h1>
 
-            <div className='w-full flex items-start'>
+            <div className='w-full flex items-start gap-3'>
                 <SearchBlockDebounce
                     className='flex items-start w-1/3'
                     onSubmit={handleSearch} />
+
+                <Select
+                    size='sm'
+                    variant='bordered'
+                    label="Select sort"
+                    className="w-1/4"
+                    selectedKeys={[valueSort]}
+                    onChange={handleSelectionChange}
+                >
+                    <SelectItem key='name'>
+                        Name
+                    </SelectItem>
+
+                    <SelectItem key='degree'>
+                        Degree
+                    </SelectItem>
+                </Select>
+
+                <Select
+                    size='sm'
+                    variant='bordered'
+                    label="Select type sort"
+                    className="w-1/4"
+                    selectedKeys={[typeSort]}
+                    onChange={handleSelectionTypeSort}
+                >
+                    <SelectItem key='asc'>
+                        Asc
+                    </SelectItem>
+
+                    <SelectItem key='dec'>
+                        Dec
+                    </SelectItem>
+                </Select>
             </div>
 
-            <DataTableUser
-                isLoading={isLoading}
-                columns={columns}
-                data={data?.data.users}
-            />
+            {
+                data && data.data ?
+                    <DataTableUser
+                        isLoading={isLoading}
+                        columns={columns}
+                        data={data.data.users}
+                    />
+                    : <Spinner
+                        size="lg"
+                        label="Loading"
+                        color="primary"
+                    />
+            }
 
-            <DataTablePagination
-                pagination={pagination}
-                onPageChange={handlePageChange} />
+            <div className='w-full flex justify-center'>
+                <DataTablePagination
+                    pagination={pagination}
+                    onPageChange={handlePageChange} />
+            </div>
         </div>
     )
 }

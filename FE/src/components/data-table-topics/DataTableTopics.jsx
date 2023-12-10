@@ -150,7 +150,10 @@ const DataTableTopics = ({ columns, data, onDelete, onEdit, isLoading }) => {
 
     return (
         <div className='w-full p-4'>
-            <Table isStriped aria-label="Example static collection table">
+            <Table
+                isStriped
+                layout="fixed"
+            >
                 <TableHeader columns={columns} >
                     {(column) => <TableColumn
                         key={column.key}
