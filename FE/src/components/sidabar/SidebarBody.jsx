@@ -1,12 +1,15 @@
 import { Button } from '@nextui-org/react';
+import { logOut } from 'app/slice/auth/auth.slice';
 import clsx from 'clsx';
 import { SSOCOOKIES } from 'constants/app.const';
 import Cookies from 'js-cookie';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { logoutUser } from 'services/user.svc';
 
 const SidebarBody = (props) => {
     const { icons, className } = props
+    const dispatch = useDispatch()
     const navigate = useNavigate()
 
     const handleLogout = async () => {
@@ -17,6 +20,7 @@ const SidebarBody = (props) => {
         if (link === '/logout') {
             navigate('/login')
             handleLogout()
+            dispatch(logOut())
             Cookies.remove(SSOCOOKIES.access)
         }
         else {
