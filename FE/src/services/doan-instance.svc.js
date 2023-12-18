@@ -6,8 +6,8 @@ import { getAccessTokenFromCookie } from "utils/auth.utils";
 import { refresh_token } from "./auth.svc";
 
 const DoanInstance = axios.create({
-  // baseURL: "https://final-project-it-project.vercel.app",
-  baseURL: "http://localhost:4000",
+  baseURL: "https://final-project-it-project.vercel.app",
+  // baseURL: "http://localhost:4000",
   withCredentials: true,
 });
 

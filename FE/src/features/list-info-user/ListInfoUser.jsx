@@ -137,9 +137,6 @@ const ListInfoUser = (props) => {
                         Name
                     </SelectItem>
 
-                    <SelectItem key='degree'>
-                        Degree
-                    </SelectItem>
                 </Select>
 
                 <Select

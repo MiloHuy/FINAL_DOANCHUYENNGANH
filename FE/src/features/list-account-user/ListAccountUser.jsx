@@ -170,10 +170,6 @@ const ListAccountUser = (props) => {
                     <SelectItem key='name'>
                         Name
                     </SelectItem>
-
-                    <SelectItem key='degree'>
-                        Degree
-                    </SelectItem>
                 </Select>
 
                 <Select
