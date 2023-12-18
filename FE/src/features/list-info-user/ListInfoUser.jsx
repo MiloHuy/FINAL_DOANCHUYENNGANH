@@ -10,7 +10,7 @@ import columns from './columns';
 const ListInfoUser = (props) => {
     const [data, setData] = useState()
     const [valueSort, setValueSort] = useState('');
-    const [typeSort, setTypeSort] = useState('asc');
+    const [typeSort, setTypeSort] = useState('');
     const [isLoading, setIsLoading] = useState(false)
 
     const [filter, setFilter] = useState({
@@ -76,15 +76,18 @@ const ListInfoUser = (props) => {
     }, [valueSort, typeSort])
 
     useEffect(() => {
+        handleSort()
+    }, [handleSort])
+
+    useEffect(() => {
         fetchTopics(
             filter.page,
             filter.size,
             filter.search,
             filter.sort,
         )
-
-        handleSort()
-    }, [fetchTopics, filter.page, filter.size, filter.search, filter.sort, handleSort])
+        // handleSort()
+    }, [fetchTopics, filter.page, filter.size, filter.search, filter.sort])
 
     const handlePageChange = useCallback((newPage) => {
         setFilter((prev) => ({
@@ -117,7 +120,7 @@ const ListInfoUser = (props) => {
                 DANH SÁCH GIẢNG VIÊN
             </h1>
 
-            <div className='w-full flex items-start gap-3'>
+            <div className='w-full flex items-center justify-between px-2 gap-3'>
                 <SearchBlockDebounce
                     className='flex items-start w-1/3'
                     onSubmit={handleSearch} />
@@ -126,7 +129,7 @@ const ListInfoUser = (props) => {
                     size='sm'
                     variant='bordered'
                     label="Select sort"
-                    className="w-1/4"
+                    className="w-1/4 "
                     selectedKeys={[valueSort]}
                     onChange={handleSelectionChange}
                 >
@@ -151,8 +154,8 @@ const ListInfoUser = (props) => {
                         Asc
                     </SelectItem>
 
-                    <SelectItem key='dec'>
-                        Dec
+                    <SelectItem key='desc'>
+                        Desc
                     </SelectItem>
                 </Select>
             </div>

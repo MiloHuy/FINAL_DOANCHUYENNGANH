@@ -1,4 +1,4 @@
-import { Spinner } from "@nextui-org/react";
+import { Select, SelectItem, Spinner } from "@nextui-org/react";
 import clsx from 'clsx';
 import DataTable from 'components/data-table';
 import DataTablePagination from 'components/data-table-pagination';
@@ -11,6 +11,8 @@ import columns from './columns';
 const ListAccountUser = (props) => {
     const [data, setData] = useState()
     const [isLoading, setIsLoading] = useState(true)
+    const [valueSort, setValueSort] = useState('');
+    const [typeSort, setTypeSort] = useState('');
 
     const [pagination, setPagination] = useState({
         pagIndex: 1,
@@ -22,14 +24,16 @@ const ListAccountUser = (props) => {
         page: 1,
         size: 4,
         search: '',
+        sort: '',
     })
 
-    const fetchAccounts = useCallback(async (page, pageSize, search) => {
+    const fetchAccounts = useCallback(async (page, pageSize, search, sort) => {
         try {
             const initialData = await getAllAccounts({
                 page: page,
                 size: pageSize,
-                search: search
+                search: search,
+                sort: sort
             })
             setData(initialData)
 
@@ -59,13 +63,40 @@ const ListAccountUser = (props) => {
         }))
     }, [])
 
+    const handleSelectionChange = (e) => {
+        setValueSort(e.target.value);
+    };
+
+    const handleSelectionTypeSort = (e) => {
+        setTypeSort(e.target.value);
+    };
+
+    const handleSort = useCallback(() => {
+        setFilter((prev) => ({
+            ...prev,
+            page: 1,
+            sort: [valueSort, typeSort].join(',')
+        }))
+
+        setPagination((prev) => ({
+            ...prev,
+            pagIndex: 1
+        }))
+    }, [valueSort, typeSort])
+
+    useEffect(() => {
+        handleSort()
+    }, [handleSort])
+
     useEffect(() => {
         fetchAccounts(
             filter.page,
             filter.size,
-            filter.search)
+            filter.search,
+            filter.sort,
+        )
 
-    }, [fetchAccounts, filter.page, filter.size, filter.search])
+    }, [fetchAccounts, filter.page, filter.size, filter.search, filter.sort])
 
     const handleSearch = useCallback((newFilter) => {
         setFilter((prev) => ({
@@ -93,7 +124,7 @@ const ListAccountUser = (props) => {
             toast.success('Xóa account thành công!!!', {
                 position: "bottom-right",
                 autoClose: 2000,
-                hideProgressBar: false,
+                hideProgressBar: true,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true,
@@ -107,7 +138,7 @@ const ListAccountUser = (props) => {
             toast.success('Xóa account thất bại!!!', {
                 position: "bottom-right",
                 autoClose: 2000,
-                hideProgressBar: false,
+                hideProgressBar: true,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true,
@@ -123,10 +154,44 @@ const ListAccountUser = (props) => {
                 DANH SÁCH TÀI KHOẢN CỦA NGƯỜI DÙNG.
             </h1>
 
-            <div className='w-full flex items-start mt-2'>
+            <div className='w-full flex items-start justify-between px-4'>
                 <SearchBlockDebounce
                     className='flex items-start w-1/3'
                     onSubmit={handleSearch} />
+                <Select
+                    size='sm'
+                    variant='bordered'
+                    radius='sm'
+                    label="Select sort"
+                    className="w-1/4"
+                    selectedKeys={[valueSort]}
+                    onChange={handleSelectionChange}
+                >
+                    <SelectItem key='name'>
+                        Name
+                    </SelectItem>
+
+                    <SelectItem key='degree'>
+                        Degree
+                    </SelectItem>
+                </Select>
+
+                <Select
+                    size='sm'
+                    variant='bordered'
+                    label="Select type sort"
+                    className="w-1/4"
+                    selectedKeys={[typeSort]}
+                    onChange={handleSelectionTypeSort}
+                >
+                    <SelectItem key='asc'>
+                        Asc
+                    </SelectItem>
+
+                    <SelectItem key='desc'>
+                        Dec
+                    </SelectItem>
+                </Select>
             </div>
 
             {

@@ -3,13 +3,11 @@ import { useMemo, useState } from 'react'
 import { Button, Input } from '@nextui-org/react'
 import clsx from 'clsx'
 import { useFormik } from 'formik'
-import { useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
 import { updatePassword } from 'services/admin.svc'
 import { object, string } from 'yup'
 
 const FormSetPassword = (props) => {
-    const dispatch = useDispatch()
     const { usernameInfo } = props
     const { username, _id } = usernameInfo
 
@@ -28,7 +26,7 @@ const FormSetPassword = (props) => {
             toast.success('Đặt lại mật khẩu thành công!!!', {
                 position: "bottom-right",
                 autoClose: 2000,
-                hideProgressBar: false,
+                hideProgressBar: true,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true,
@@ -38,16 +36,20 @@ const FormSetPassword = (props) => {
 
         } catch (err) {
             console.error(err)
-            toast.error('Đặt lại mật khẩu thất bại!!!', {
-                position: "bottom-right",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-            });
+            const { code } = err.response.data
+            if (code) {
+                toast.error('Vui lòng nhập mật khẩu', {
+                    position: "bottom-right",
+                    autoClose: 2000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+            }
+
         }
     }
 
@@ -107,7 +109,7 @@ const FormSetPassword = (props) => {
             />
             <div className='flex justify-end pr-4 w-full'>
                 <Button
-                    className=" text-sm font-merriweather"
+                    className=" text-sm font-merriweather text-white"
                     onClick={handleSubmitSetPassWord}
                     variant="bordered"
                     type='submit'

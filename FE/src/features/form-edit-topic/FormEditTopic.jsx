@@ -31,7 +31,7 @@ const FormEditTopic = (props) => {
             toast.success('Chỉnh sửa đề tài thành công!!!', {
                 position: "bottom-right",
                 autoClose: 2000,
-                hideProgressBar: false,
+                hideProgressBar: true,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true,
@@ -47,7 +47,7 @@ const FormEditTopic = (props) => {
             toast.error('Chỉnh sửa đề tài thất bại!!!', {
                 position: "bottom-right",
                 autoClose: 2000,
-                hideProgressBar: false,
+                hideProgressBar: true,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true,

@@ -36,7 +36,7 @@ const FormLogin = (props) => {
             toast.success('Đăng nhập thành công!!!', {
                 position: "bottom-right",
                 autoClose: 1000,
-                hideProgressBar: false,
+                hideProgressBar: true,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true,
@@ -56,7 +56,7 @@ const FormLogin = (props) => {
             toast.error(`Đăng nhập thất bại`, {
                 position: "bottom-right",
                 autoClose: 2000,
-                hideProgressBar: false,
+                hideProgressBar: true,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true,

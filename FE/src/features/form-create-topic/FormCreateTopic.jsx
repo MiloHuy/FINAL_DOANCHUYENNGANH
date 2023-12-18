@@ -56,7 +56,7 @@ const FormCreateTopics = (props) => {
             toast.success('Tạo đề tài thành công!!!', {
                 position: "bottom-right",
                 autoClose: 2000,
-                hideProgressBar: false,
+                hideProgressBar: true,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true,
@@ -70,7 +70,7 @@ const FormCreateTopics = (props) => {
             toast.error('Tạo đề tài thất bại!!!', {
                 position: "bottom-right",
                 autoClose: 2000,
-                hideProgressBar: false,
+                hideProgressBar: true,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true,

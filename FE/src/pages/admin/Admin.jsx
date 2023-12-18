@@ -1,22 +1,19 @@
+import { Spinner } from "@nextui-org/react"
 import { selectIsAuthenticated, selectRole, setUserInfo } from "app/slice/auth/auth.slice"
 import { sidebarIcons } from "components/icon/sidebar-admin.icon"
 import Sidebar from "components/sidabar/Sidebar"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Outlet } from 'react-router'
+import { Navigate } from "react-router-dom"
 import { toast } from "react-toastify"
 import { get_user } from "services/auth.svc"
-import { Navigate } from "react-router-dom"
-import { Spinner } from "@nextui-org/react"
 
 
 const Admin = () => {
     const dispatch = useDispatch()
 
     const [darkmode, setDarkMode] = useState('light')
-
-    const [firstRender, setFirstRender] = useState(true)
-
     const isAuthen = useSelector(selectIsAuthenticated)
 
     const role = useSelector(selectRole)
@@ -42,15 +39,13 @@ const Admin = () => {
             toast.error(`Không đủ quyền truy cập. Vui lòng đăng nhập`, {
                 position: "bottom-right",
                 autoClose: 2000,
-                hideProgressBar: false,
+                hideProgressBar: true,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true,
                 progress: undefined,
                 theme: "light",
             });
-        } finally {
-            setFirstRender(false)
         }
     }
 
@@ -68,12 +63,9 @@ const Admin = () => {
                 </div> :
                 <Navigate to={'/users'} />
             :
-            firstRender ?
-                <div className="w-screen h-screen flex justify-center content-center">
-                    <Spinner />
-                </div>
-                :
-                <Navigate to={'/'} />
+            <div className="w-full h-full flex justify-center content-center">
+                <Spinner />
+            </div>
     )
 }
 

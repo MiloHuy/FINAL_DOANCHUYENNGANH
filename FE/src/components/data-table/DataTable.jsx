@@ -1,4 +1,4 @@
-import { Button, Modal, ModalBody, ModalContent, Spinner, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, useDisclosure } from "@nextui-org/react";
+import { Button, Modal, ModalBody, ModalContent, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, useDisclosure } from "@nextui-org/react";
 import FormSetPassword from "features/form-set-password";
 import { PenSquare, Trash2 } from 'lucide-react';
 import { useCallback, useState } from "react";
@@ -83,9 +83,9 @@ const DataTable = ({ columns, data, isLoading, onDelete }) => {
 
     return (
         <div
-            className='max-w-[800px] min-w-[700px] min-h-[300px] p-4 overflow-x-hidden'>
+            className='w-full min-w-[700px] min-h-[300px] p-4 overflow-x-hidden'>
             <Table
-                isStriped
+                radius='sm'
                 layout="fixed">
                 <TableHeader columns={columns} >
                     {(column) => <TableColumn
@@ -99,8 +99,6 @@ const DataTable = ({ columns, data, isLoading, onDelete }) => {
                     data && data.length !== 0 ?
                         <TableBody
                             items={data}
-                            isLoading={isLoading}
-                            loadingContent={<Spinner label="Loading..." />}
                         >
                             {(item) => (
                                 <TableRow key={item.username}>
@@ -118,6 +116,11 @@ const DataTable = ({ columns, data, isLoading, onDelete }) => {
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
                 placement="top-center"
+                classNames={{
+                    body: "py-6",
+                    base: "border-[#292f46] bg-[#202120] dark:bg-[#525451] text-[#a8b0d3]",
+                    closeButton: "hover:bg-white/5 active:bg-white/10",
+                }}
             >
                 <ModalContent>
                     {(onClose) => (

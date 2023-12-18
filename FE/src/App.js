@@ -31,7 +31,11 @@ function App() {
             path="admin"
             element={
               <Suspense
-                fallback={<Spinner size="lg" label="Loading" color="default" />}
+                fallback={
+                  <div className="w-full h-full flex items-center justify-center">
+                    <Spinner size="lg" label="Loading" color="default" />
+                  </div>
+                }
               >
                 <LazyLoadingAdmin />
               </Suspense>

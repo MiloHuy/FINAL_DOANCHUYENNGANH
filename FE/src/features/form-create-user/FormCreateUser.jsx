@@ -43,7 +43,7 @@ const FormCreateUser = (props) => {
             toast.success('Tạo tại khoản thành công!!!', {
                 position: "bottom-right",
                 autoClose: 2000,
-                hideProgressBar: false,
+                hideProgressBar: true,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true,
@@ -57,7 +57,7 @@ const FormCreateUser = (props) => {
             toast.error('Tạo tài khoản thất bại!!!', {
                 position: "bottom-right",
                 autoClose: 2000,
-                hideProgressBar: false,
+                hideProgressBar: true,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true,
