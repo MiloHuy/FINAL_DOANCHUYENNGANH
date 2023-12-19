@@ -1,7 +1,7 @@
 import { Modal, ModalBody, ModalContent, ModalHeader } from '@nextui-org/react';
 import FormUploadImage from 'features/form-upload-image/FormUploadImage';
 
-const ModalChangeAvatar = ({ isOpen, onOpenChange, onClose, handleChangeAvatar }) => {
+const ModalChangeAvatar = ({ isOpen, onOpenChange, onClose, handleChangeAvatar, userInfo }) => {
     return (
         <Modal
             scrollBehavior='outside'
@@ -24,7 +24,9 @@ const ModalChangeAvatar = ({ isOpen, onOpenChange, onClose, handleChangeAvatar }
                         </ModalHeader>
 
                         <ModalBody>
-                            <FormUploadImage handleChangeAvatar={handleChangeAvatar} />
+                            <FormUploadImage
+                                userInfo={userInfo}
+                                handleChangeAvatar={handleChangeAvatar} />
                         </ModalBody>
                     </>
                 )}

@@ -146,7 +146,8 @@ export const handleGetAllTopicOfCurrentUser = catchAsyncErrors(
       req.query
     )
       .search()
-      .pagination(size);
+      .pagination(size)
+      .sort();
 
     listTopics = await apiFeaturesPagination.query;
 
@@ -327,7 +328,7 @@ export const handleUpdateUser = catchAsyncErrors(async (req, res, next) => {
 
   if (userDetails) {
     if (image) {
-      if (userDetails.image) {
+      if (userDetails.image.ref) {
         try {
           const storageRef = ref(storage, userDetails.image.ref);
           await deleteObject(storageRef);

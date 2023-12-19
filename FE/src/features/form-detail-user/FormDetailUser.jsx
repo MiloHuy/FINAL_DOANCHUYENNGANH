@@ -18,7 +18,6 @@ const FormDetailUser = (props) => {
         phone: '',
         email: '',
         degree: '',
-        image: null
     })
 
     const fetchUserInfo = useCallback(async () => {
@@ -26,8 +25,11 @@ const FormDetailUser = (props) => {
             const data = await getUserInfo()
             setUserInfo(data.data)
 
-        } catch (error) {
+            values['phone'] = data.data.user.phone
+            values['email'] = data.data.user.email
+            values['degree'] = data.data.user.degree
 
+        } catch (error) {
         }
     }, [])
 
@@ -37,8 +39,6 @@ const FormDetailUser = (props) => {
         values['phone'] = userInfo.user.phone
         values['email'] = userInfo.user.email
         values['degree'] = userInfo.user.degree
-
-        handleChangeAvatar()
     }
 
     useEffect(() => {
@@ -56,13 +56,6 @@ const FormDetailUser = (props) => {
         if (openModal === true) {
             setOpenModal(false)
             onClose()
-        }
-    }
-
-    const handleChangeAvatar = (image) => {
-        console.log('imag: ' + image)
-        if (image) {
-            values['image'] = image
         }
     }
 
@@ -107,8 +100,6 @@ const FormDetailUser = (props) => {
 
     const handleInput = (e) => {
         setFormUserDetail({ ...formUserDetail, [e.target.name]: e.target.value })
-
-        handleChangeAvatar()
     }
 
     const formLabel = useMemo(() => ({
@@ -178,9 +169,14 @@ const FormDetailUser = (props) => {
                         />
                     </div>
 
-                    <Dropdown placement="bottom-end">
-                        <DropdownTrigger>
+                    <Dropdown
+                        isDisabled={isDisabled}
+                        placement="bottom-end">
+                        <DropdownTrigger
+                        // isDisabled={isDisabled}
+                        >
                             <img
+                                lazy='loading'
                                 alt='avatar'
                                 as="button"
                                 className="w-[250px] h-full"
@@ -188,7 +184,9 @@ const FormDetailUser = (props) => {
                             />
                         </DropdownTrigger>
 
-                        <DropdownMenu aria-label="Profile" variant="flat">
+                        <DropdownMenu
+                            disabledKeys={isDisabled ? ['profile'] : ''}
+                            aria-label="Profile" variant="flat">
                             <DropdownItem
                                 onClick={handleOpenModal}
                                 key="profile"
@@ -203,7 +201,7 @@ const FormDetailUser = (props) => {
                         onOpenChange={handleOpenModal}
                         onClose={handleCloseModal}
 
-                        handleChangeAvatar={handleChangeAvatar}
+                        userInfo={values}
                     />
                 </div>
 
