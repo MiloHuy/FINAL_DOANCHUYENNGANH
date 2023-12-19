@@ -4,13 +4,14 @@ import { Camera } from 'lucide-react';
 import { useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { uploadImage } from "services/user.svc";
+import { updateInfoUser, uploadImage } from "services/user.svc";
 
 
-const FormUploadImage = ({ handleChangeAvatar }) => {
+const FormUploadImage = ({ handleChangeAvatar, userInfo }) => {
     const [selectFiled, setSelectFiles] = useState('')
-
     const [image, setImage] = useState()
+    const [dataUpload, setDataUpload] = useState(userInfo)
+    const [flag, setFlag] = useState(false)
 
     const [isLoading, setIsLoading] = useState(false)
 
@@ -33,7 +34,45 @@ const FormUploadImage = ({ handleChangeAvatar }) => {
         }
     }
 
-    const handleCreatePost = async () => {
+    const updateUserWithImage = async () => {
+        try {
+            setIsLoading(true)
+            await handleUploadImage()
+
+            await updateInfoUser(dataUpload)
+
+            setIsLoading(false)
+            toast.success('Chỉnh sửa thông tin thành công!!!', {
+                position: "bottom-right",
+                autoClose: 2000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+
+        } catch (err) {
+            setIsLoading(false)
+            const { code } = err.response.data;
+
+            if (code) {
+                toast.error('Vui lòng nhập số điện thoại hợp lệ ở Việt Nam', {
+                    position: "bottom-right",
+                    autoClose: 2000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+            }
+        }
+    }
+
+    const handleUploadImage = async () => {
         try {
             setIsLoading(true)
             values['post_img'] = selectFiled[0]
@@ -43,8 +82,10 @@ const FormUploadImage = ({ handleChangeAvatar }) => {
 
             const imageRes = await uploadImage(formData)
 
-            console.log('imageRes.image: ' + Object.entries(imageRes.image))
-            // handleChangeAvatar(imageRes.image)
+            await updateInfoUser(
+                dataUpload,
+                dataUpload['image'] = imageRes.data.image
+            )
 
             setIsLoading(false)
 
@@ -58,12 +99,12 @@ const FormUploadImage = ({ handleChangeAvatar }) => {
                 progress: undefined,
                 theme: "light",
             });
+            setFlag(true)
 
-            // setTimeout(() => { window.location.reload() }, 2500)     
         }
         catch (err) {
 
-            console.log('error:', err.response)
+            console.log('error:', err)
             setIsLoading(false)
 
             toast.error('Thay đổi thất bại!!!', {
@@ -82,7 +123,7 @@ const FormUploadImage = ({ handleChangeAvatar }) => {
     const formik = useFormik({
         initialValues: formUpload,
         handleChange: { handleInput },
-        handleSubmit: { handleCreatePost }
+        handleSubmit: { updateUserWithImage }
     })
 
     const { values, errors } = formik
@@ -129,7 +170,7 @@ const FormUploadImage = ({ handleChangeAvatar }) => {
                 type="submit"
                 radius="sm"
                 isLoading={isLoading}
-                onClick={handleCreatePost}
+                onClick={handleUploadImage}
                 className='text-lg font-mono w-1/2'>
                 Đăng
             </Button>
