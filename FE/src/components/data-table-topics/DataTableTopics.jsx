@@ -1,4 +1,4 @@
-import { Button, Modal, ModalBody, ModalContent, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, useDisclosure } from "@nextui-org/react";
+import { Button, Modal, ModalBody, ModalContent, Spinner, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, useDisclosure } from "@nextui-org/react";
 import FormEditTopic from "features/form-edit-topic";
 import FormViewTopic from "features/form-view-topic";
 import { Eye, PenSquare, Trash2 } from 'lucide-react';
@@ -77,13 +77,13 @@ const DataTableTopics = ({ columns, data, onDelete, onEdit, isLoading }) => {
         switch (columnKey) {
             case "name":
                 return (
-                    <h1 className='text-sm text-black dark:text-white truncate '>
+                    <h1 className='text-sm text-black dark:text-white  '>
                         {user.name}
                     </h1>
                 );
             case "description":
                 return (
-                    <h1 className='text-sm text-black dark:text-white truncate'>
+                    <h1 className='text-sm text-black dark:text-white '>
                         {user.description}
                     </h1>
                 );
@@ -166,6 +166,7 @@ const DataTableTopics = ({ columns, data, onDelete, onEdit, isLoading }) => {
                         <TableBody
                             isLoading={isLoading}
                             items={data}
+                            loadingContent={<Spinner label="Loading..." />}
                         >
                             {(item) => (
                                 <TableRow key={item.name}>

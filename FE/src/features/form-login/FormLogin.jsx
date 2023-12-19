@@ -51,18 +51,20 @@ const FormLogin = (props) => {
             }, 3000)
 
         } catch (err) {
-            console.log("errorMessage: " + Object.entries(err.response))
+            const { code } = err.response.data
 
-            toast.error(`Đăng nhập thất bại`, {
-                position: "bottom-right",
-                autoClose: 2000,
-                hideProgressBar: true,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-            });
+            if (code) {
+                toast.error(`Tài khoản không có trong hệ thống`, {
+                    position: "bottom-right",
+                    autoClose: 2000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+            }
         }
     }
 

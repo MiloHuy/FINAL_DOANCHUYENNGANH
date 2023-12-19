@@ -29,6 +29,8 @@ const ListAccountUser = (props) => {
 
     const fetchAccounts = useCallback(async (page, pageSize, search, sort) => {
         try {
+            setIsLoading(true)
+
             const initialData = await getAllAccounts({
                 page: page,
                 size: pageSize,
@@ -37,7 +39,7 @@ const ListAccountUser = (props) => {
             })
             setData(initialData)
 
-            setIsLoading(!isLoading)
+            setIsLoading(false)
 
             const { size, totals } = initialData.data
             setPagination((prev) => (({
