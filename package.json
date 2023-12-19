@@ -1,0 +1,20 @@
+{
+  "name": "final_doanchuyennganh",
+  "version": "1.0.0",
+  "description": "Đồ án chuyên ngành - Đồ án cuối kì",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "beInstall": "cd BE && npm i",
+    "feInstall": "cd FE && npm i",
+    "server": "cd BE && nodemon server.js",
+    "client": "cd FE && npm start",
+    "install": "concurrently \"npm run beInstall\" \"npm run feInstall\"",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
