@@ -29,12 +29,12 @@ const ListSinhVien = () => {
                 <TableBody>
                     <TableRow key="1">
                         <TableCell>Trần Nhật Hào</TableCell>
-                        <TableCell>20110</TableCell>
+                        <TableCell>20110471</TableCell>
                         <TableCell>100%</TableCell>
                     </TableRow>
                     <TableRow key="2">
                         <TableCell>Trần Thanh Phương</TableCell>
-                        <TableCell>20110</TableCell>
+                        <TableCell>20110547</TableCell>
                         <TableCell>100%</TableCell>
                     </TableRow>
                     <TableRow key="3">
