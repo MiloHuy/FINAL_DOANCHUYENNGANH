@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { useRef, useState } from "react";
 
 const SearchBlockDebounce = (props) => {
-    const { onSubmit } = props
+    const { onSubmit, variant } = props
     const [searchTerm, setSearchTerm] = useState("")
     const typingTimeoutRef = useRef(null)
 
@@ -32,7 +32,7 @@ const SearchBlockDebounce = (props) => {
                 type='text'
                 value={searchTerm}
                 size='sm'
-                variant="bordered"
+                variant={variant ? variant : 'bordered'}
                 onChange={handleSearchTermChange}
                 placeholder="Nhập nội dung cần tìm kiếm."
                 className='text-sm text-black dark:text-white'

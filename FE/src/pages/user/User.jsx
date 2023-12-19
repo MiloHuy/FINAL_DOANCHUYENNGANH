@@ -39,18 +39,20 @@ const User = () => {
             console.log('error:', error.response.data)
 
             const { code } = error.response.data
-            toast.error(`Không đủ quyền truy cập. Vui lòng đăng nhập`, {
-                position: "bottom-right",
-                autoClose: 2000,
-                hideProgressBar: true,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-            });
+            if (code) {
+                toast.error(`Không đủ quyền truy cập. Vui lòng đăng nhập`, {
+                    position: "bottom-right",
+                    autoClose: 2000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
 
-            navigate('/')
+                navigate('/')
+            }
         }
     }
 
@@ -62,7 +64,7 @@ const User = () => {
                         <Sidebar icons={sidebarIconsUser} handleController={handleDarkMode} className='h-full' />
                     </div>
 
-                    <div className='col-span-9'>
+                    <div className={`col-span-9 ${darkmode}`}>
                         <Outlet />
                     </div>
                 </div>

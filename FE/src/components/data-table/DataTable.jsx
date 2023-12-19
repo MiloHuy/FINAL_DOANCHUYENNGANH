@@ -1,4 +1,4 @@
-import { Button, Modal, ModalBody, ModalContent, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, useDisclosure } from "@nextui-org/react";
+import { Button, Modal, ModalBody, ModalContent, Popover, PopoverContent, PopoverTrigger, Spinner, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, useDisclosure } from "@nextui-org/react";
 import FormSetPassword from "features/form-set-password";
 import { PenSquare, Trash2 } from 'lucide-react';
 import { useCallback, useState } from "react";
@@ -10,10 +10,13 @@ const DataTable = ({ columns, data, isLoading, onDelete }) => {
         username: '',
         _id: ''
     })
+    const [isLoad, setIsLoad] = useState(false)
 
     const handleOnDelete = (id) => {
         if (!onDelete) return
+        setIsLoad(true)
         onDelete(id)
+        setIsLoad(false)
     }
 
     const handleEditPassWord = (username, id) => {
@@ -71,9 +74,25 @@ const DataTable = ({ columns, data, isLoading, onDelete }) => {
                             <PenSquare size={16} color="#0a0a0a" />
                         </Button>
 
-                        <Button className=' dark:bg-white' isIconOnly variant="light" onClick={() => handleOnDelete(user._id)}>
-                            <Trash2 size={16} color="#be2d2d" />
-                        </Button>
+                        <Popover placement="bottom">
+                            <PopoverTrigger>
+                                <Button className=' dark:bg-white' isIconOnly variant="light" >
+                                    <Trash2 size={16} color="#be2d2d" />
+                                </Button>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-[140px] ">
+                                <div classNamee='grid grid-cols-1 gap-2 w-full'>
+                                    <Button
+                                        isLoading={isLoad}
+                                        className=' dark:bg-white'
+                                        variant="light"
+                                        onClick={() => handleOnDelete(user._id)}>
+                                        Xác nhận
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#be2d2d" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-round-x"><path d="M2 21a8 8 0 0 1 11.873-7" /><circle cx="10" cy="8" r="5" /><path d="m17 17 5 5" /><path d="m22 17-5 5" /></svg>
+                                    </Button>
+                                </div>
+                            </PopoverContent>
+                        </Popover>
                     </div>
                 );
             default:
@@ -83,7 +102,7 @@ const DataTable = ({ columns, data, isLoading, onDelete }) => {
 
     return (
         <div
-            className='w-full min-w-[700px] min-h-[300px] p-4 overflow-x-hidden'>
+            className='w-full p-4 '>
             <Table
                 radius='sm'
                 layout="fixed">
@@ -98,7 +117,9 @@ const DataTable = ({ columns, data, isLoading, onDelete }) => {
                 {
                     data && data.length !== 0 ?
                         <TableBody
+                            isLoading={isLoading}
                             items={data}
+                            loadingContent={<Spinner label="Loading..." color='primary' />}
                         >
                             {(item) => (
                                 <TableRow key={item.username}>

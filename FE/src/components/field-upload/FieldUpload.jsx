@@ -5,7 +5,7 @@ const FieldUpload = () => {
     const [imageName, setImageName] = useState('No file Selected')
 
     return (
-        <div className="w-[100vw] h-[100vh] flex flex-col justify-center items-center">
+        <div className="w-full h-full flex flex-col justify-center items-center">
             <form
                 action=""
                 className=' flex flex-col justify-center items-center border-2 border-dashed border-blue-400 h-80 w-[500px] rounded-md cursor-pointer'

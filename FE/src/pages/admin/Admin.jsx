@@ -57,7 +57,7 @@ const Admin = () => {
                         <Sidebar icons={sidebarIcons} handleController={handleDarkMode} className='h-full' />
                     </div>
 
-                    <div className='col-span-7'>
+                    <div className={`col-span-7 ${darkmode}`}>
                         <Outlet />
                     </div>
                 </div> :

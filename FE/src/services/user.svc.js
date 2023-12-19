@@ -7,6 +7,7 @@ export const API_USER_ENDPOINT = {
   },
   POST: {
     create_topic: "/api/v1/users/topics",
+    upload_image: "/api/v1/uploads",
     edit_info: "/api/v1/users",
     logout: "/api/v1/auth/logout",
   },
@@ -57,5 +58,27 @@ export const updateInfoUser = async (payload) => {
 
 export const logoutUser = async () => {
   const res = DoanInstance.post(API_USER_ENDPOINT.POST.logout);
+  return res;
+};
+
+export const uploadImage = async (payload) => {
+  const res = DoanInstance.post(
+    API_USER_ENDPOINT.POST.upload_image,
+    payload,
+    {
+      headers: {
+        "Content-Type": `multipart/form-data`,
+      },
+    },
+    {
+      onUploadProgress: (progressEvent) => {
+        console.log(
+          "upload progress " +
+            Math.round((progressEvent.loaded / progressEvent.total) * 100) +
+            "%",
+        );
+      },
+    },
+  );
   return res;
 };

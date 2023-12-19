@@ -115,66 +115,69 @@ const ListInfoUser = (props) => {
     }, [])
 
     return (
-        <div className={clsx('grid items-center justify-center grid-cols-1 gap-3', props.className)}>
-            <h1 className='text-sm text-black dark:text-white font-bold font-merriweather text-center'>
+        <div className={clsx('grid items-center justify-center grid-cols-1 gap-5', props.className)}>
+            <h3 className='text-sm text-black dark:text-white font-bold font-merriweather text-center'>
                 DANH SÁCH GIẢNG VIÊN
-            </h1>
+            </h3>
 
-            <div className='w-full flex items-center justify-between px-2 gap-3'>
-                <SearchBlockDebounce
-                    className='flex items-start w-1/3'
-                    onSubmit={handleSearch} />
+            <div className='grid grid-cols-1 py-2 border bg-table_background rounded-md border-black'>
+                <div className='w-full flex items-end justify-between px-3 gap-3'>
+                    <SearchBlockDebounce
+                        variant='faded'
+                        className='flex items-start w-1/3'
+                        onSubmit={handleSearch} />
 
-                <Select
-                    size='sm'
-                    variant='bordered'
-                    label="Select sort"
-                    className="w-1/4 "
-                    selectedKeys={[valueSort]}
-                    onChange={handleSelectionChange}
-                >
-                    <SelectItem key='name'>
-                        Name
-                    </SelectItem>
+                    <Select
+                        size='sm'
+                        variant='faded'
+                        label="Select sort"
+                        className="w-1/4 "
+                        selectedKeys={[valueSort]}
+                        onChange={handleSelectionChange}
+                    >
+                        <SelectItem key='name' className="text-black">
+                            Name
+                        </SelectItem>
 
-                </Select>
+                    </Select>
 
-                <Select
-                    size='sm'
-                    variant='bordered'
-                    label="Select type sort"
-                    className="w-1/4"
-                    selectedKeys={[typeSort]}
-                    onChange={handleSelectionTypeSort}
-                >
-                    <SelectItem key='asc'>
-                        Asc
-                    </SelectItem>
+                    <Select
+                        size='sm'
+                        variant='faded'
+                        label="Select type sort"
+                        className="w-1/4"
+                        selectedKeys={[typeSort]}
+                        onChange={handleSelectionTypeSort}
+                    >
+                        <SelectItem key='asc'>
+                            Asc
+                        </SelectItem>
 
-                    <SelectItem key='desc'>
-                        Desc
-                    </SelectItem>
-                </Select>
-            </div>
+                        <SelectItem key='desc'>
+                            Desc
+                        </SelectItem>
+                    </Select>
+                </div>
 
-            {
-                data && data.data ?
-                    <DataTableUser
-                        isLoading={isLoading}
-                        columns={columns}
-                        data={data.data.users}
-                    />
-                    : <Spinner
-                        size="lg"
-                        label="Loading"
-                        color="primary"
-                    />
-            }
+                {
+                    data && data.data ?
+                        <DataTableUser
+                            isLoading={isLoading}
+                            columns={columns}
+                            data={data.data.users}
+                        />
+                        : <Spinner
+                            size="lg"
+                            label="Loading"
+                            color="primary"
+                        />
+                }
 
-            <div className='w-full flex justify-center'>
-                <DataTablePagination
-                    pagination={pagination}
-                    onPageChange={handlePageChange} />
+                <div className='w-full flex justify-center'>
+                    <DataTablePagination
+                        pagination={pagination}
+                        onPageChange={handlePageChange} />
+                </div>
             </div>
         </div>
     )

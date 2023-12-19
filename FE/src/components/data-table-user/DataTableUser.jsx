@@ -26,11 +26,12 @@ const DataTableUser = ({ columns, data, onEdit, isLoading }) => {
 
     const classNames = useMemo(
         () => ({
-            th: ['bg-table_header_background text-white border-divider '],
-            base: ['max-w-full'],
-            table: ['bg-table_body_background rounded-lg'],
+            th: ['bg-table_header_background text-white rounded-none'],
+            base: ['max-w-full p-0 rounded-none'],
+            table: ['bg-table_body_background'],
             tb: ['border-b'],
-            wrapper: ['bg-table_background']
+            wrapper: ['bg-table_background'],
+            thead: ['rounded-none']
         }),
         [],
     );
@@ -53,7 +54,7 @@ const DataTableUser = ({ columns, data, onEdit, isLoading }) => {
                 );
             case "email":
                 return (
-                    <h1 className='text-sm text-black dark:text-white '>
+                    <h1 className='text-sm text-black dark:text-white truncate'>
                         {user.email}
                     </h1>
                 );
@@ -84,17 +85,22 @@ const DataTableUser = ({ columns, data, onEdit, isLoading }) => {
     return (
         <div className='w-full py-4'>
             <Table
+                removeWrapper
+                radius="none"
                 selectionMode="single"
                 classNames={classNames}
                 layout="fixed"
             >
-                <TableHeader columns={columns} >
-                    {(column) => <TableColumn
-                        key={column.key}
-                        allowsSorting={column.allowsSorting}
-                        align='center'>
-                        {column.label}
-                    </TableColumn>}
+                <TableHeader
+                    columns={columns} >
+                    {(column) =>
+                        <TableColumn
+                            key={column.key}
+                            allowsSorting={column.allowsSorting}
+                            align='center'>
+                            {column.label}
+                        </TableColumn>
+                    }
                 </TableHeader>
                 {
                     data && data.length !== 0 ?
